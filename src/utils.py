@@ -12,7 +12,7 @@ activation_functions = Type[Union[Hardtanh, Sigmoid, ReLU6, Tanh,
 
 ACTIVATIONS = ['Hardtanh', 'Sigmoid', 'ReLU6', 'Tanh', 'Tanhshrink',
                'Hardshrink', 'LeakyReLU', 'Softshrink', 'Softsign',
-               'Threshold', 'ReLU', 'PReLU', 'Softplus', 'ELU', 'SELU']
+               'ReLU', 'PReLU', 'Softplus', 'ELU', 'SELU']  # 'Threshold'
 
 
 def string2function(name: str) -> activation_functions:
