@@ -14,6 +14,7 @@ from utils import ACTIVATIONS
 TRAIN_BORDERS = [-5, 6]
 TEST_BORDERS = [-20, 21]
 MAX_ITERATIONS = 10000
+LEARNING_RATE = 1e-2
 
 
 def train(model: MLP, optimizer: torch.optim.Optimizer, data: torch.Tensor,
@@ -47,7 +48,7 @@ def get_mses(train_data: torch.Tensor, test_data: torch.Tensor) -> List[np.ndarr
         for _ in range(1):
             cur_mlp = MLP(input_dim=1, output_dim=1,
                           num_hidden_layers=3, hidden_dim=8, activation=activation_func)
-            optim = Adam(cur_mlp.parameters(), 1e-2)
+            optim = Adam(cur_mlp.parameters(), LEARNING_RATE)
             train(cur_mlp, optim, train_data)
             mses.append(test(cur_mlp, test_data))
 
