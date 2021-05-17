@@ -7,10 +7,10 @@ from utils import string2function, activation_functions
 
 
 class MLP(nn.Module):
-    def __init__(self, num_layers: int, input_dim: int, output_dim: int,
-                 hidden_dim: int, activation: str = 'relu'):
+    def __init__(self, input_dim: int, output_dim: int,
+                 num_hidden_layers: int, hidden_dim: int, activation: str = 'relu'):
         super().__init__()
-        self.num_layers = num_layers
+        self.num_hidden_layers = num_hidden_layers
         self.input_dim = input_dim
         self.output_dim = output_dim
         self.hidden_dim = hidden_dim
@@ -26,7 +26,7 @@ class MLP(nn.Module):
     def build_model(self) -> nn.Sequential:
         layers = self.layer(self.input_dim, self.hidden_dim)
 
-        for _ in range(self.num_layers - 1):
+        for _ in range(self.num_hidden_layers):
             layers += self.layer(self.hidden_dim, self.hidden_dim)
 
         layers += [nn.Linear(self.hidden_dim, self.output_dim)]
@@ -35,20 +35,3 @@ class MLP(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.model(x)
-
-
-def test_run():
-    input_tensor = torch.tensor([0.1, 0.5, 0.2, 0.3])
-    mlp = MLP(3, 4, 2, 3)
-    output_tensor = mlp(input_tensor)
-    return mlp.model, input_tensor, output_tensor
-
-
-if __name__ == '__main__':
-    model, input_tensor, output_tensor = test_run()
-    print('Model:')
-    print(model)
-    print('Input tensor:')
-    print(input_tensor)
-    print('Output tensor:')
-    print(output_tensor)
