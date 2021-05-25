@@ -1,9 +1,14 @@
+import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
 from torch.nn import Hardtanh, Sigmoid, ReLU6, \
     Tanh, Tanhshrink, Hardshrink, LeakyReLU, Softshrink, Softsign, \
     Threshold, ReLU, PReLU, Softplus, ELU, SELU
 
-from typing import Union, Type
+from typing import Union, Type, Optional
+
+from models.model import GeneralModel
 
 activation_functions = Type[Union[Hardtanh, Sigmoid, ReLU6, Tanh,
                                   Tanhshrink, Hardshrink, LeakyReLU,
@@ -15,7 +20,7 @@ ACTIVATIONS = ['Hardtanh', 'Sigmoid', 'ReLU6', 'Tanh', 'Tanhshrink',
                'ReLU', 'PReLU', 'Softplus', 'ELU', 'SELU']  # 'Threshold'
 
 
-def string2function(name: str) -> activation_functions:
+def string2function(name: str) -> Optional[activation_functions]:
     name = name.lower()
     if name == 'hardtanh':
         return nn.Hardtanh
@@ -47,5 +52,30 @@ def string2function(name: str) -> activation_functions:
         return nn.ELU
     elif name == 'selu':
         return nn.SELU
+    elif name == 'none':
+        return None
     else:
         raise ValueError('ERROR! Invalid function name!')
+
+
+def train(model: GeneralModel, optimizer: torch.optim.Optimizer, data: torch.Tensor,
+          target: torch.Tensor, iterations: int, verbose: bool = False):
+    for iter in range(iterations):
+        optimizer.zero_grad()
+
+        outs = model(data)
+
+        loss = F.mse_loss(outs, target)
+
+        loss.backward()
+        optimizer.step()
+
+        if verbose and (iter + 1) % 1000 == 0:
+            MAE = torch.mean(torch.abs(outs - data))
+            print(f'Iter: {iter + 1}, Loss: {loss}, MAE: {MAE}')
+
+
+def test(model: GeneralModel, data: torch.Tensor, target: torch.Tensor):
+    with torch.no_grad():
+        outs = model(data)
+        return torch.abs(outs - target)
