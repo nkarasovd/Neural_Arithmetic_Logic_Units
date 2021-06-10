@@ -21,7 +21,7 @@ class GeneralModel(nn.Module):
     def build_model(self) -> nn.Sequential:
         layers = self.layer(self.input_dim, self.hidden_dim)
 
-        for _ in range(self.num_hidden_layers):
+        for _ in range(self.num_hidden_layers - 1):
             layers += self.layer(self.hidden_dim, self.hidden_dim)
 
         layers += self.layer(self.hidden_dim, self.output_dim)
