@@ -11,6 +11,7 @@ A PyTorch implementation of [Neural Arithmetic Logic Units](https://arxiv.org/ab
 
 ## Experiment 1: Numerical Extrapolation Failures in Neural Networks
 
-<p align="center" float="left">
- <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=60%, height="80%", title="Results from paper"> <img src="./src/images/experiments/extrapolation_failure.png" alt="Drawing", width=60%, height="80%", title="Actual results">
+<p float="left">
+ <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=60%, height="80%", title="Results from paper">
+ <img src="./src/images/experiments/extrapolation_failure.png" alt="Drawing", width=60%, height="80%", title="Actual results">
 </p>
