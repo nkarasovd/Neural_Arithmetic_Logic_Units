@@ -4,5 +4,5 @@ A PyTorch implementation of [Neural Arithmetic Logic Units](https://arxiv.org/ab
 
 ## NAC and NALU architectures 
 <p align="center">
- <img src="./src/images/paper/models.png" alt="Drawing", width=30%, height="40%">
+ <img src="./src/images/paper/models.png" alt="Drawing", width=60%, height="80%">
 </p>
