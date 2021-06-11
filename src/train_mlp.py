@@ -20,8 +20,9 @@ def get_mses(train_data: torch.Tensor, test_data: torch.Tensor) -> List[np.ndarr
     result = []
 
     for activation_func in ACTIVATIONS:
+        print(f'Current activation: {activation_func}')
         mses = []
-        for _ in range(1):
+        for _ in range(100):
             cur_mlp = MLP(input_dim=1, output_dim=1,
                           num_hidden_layers=3, hidden_dim=8, activation=activation_func)
             optim = Adam(cur_mlp.parameters(), LEARNING_RATE)
@@ -45,7 +46,7 @@ def plot(mses: List[np.ndarray]):
     plt.grid()
     plt.legend(loc='best')
     plt.ylabel('Mean Absolute Error')
-    plt.savefig('./images/' + 'extrapolation.png', format='png', dpi=300)
+    plt.savefig('./images/experiments/' + 'extrapolation_failure.png', format='png', dpi=300)
     plt.show()
 
 
