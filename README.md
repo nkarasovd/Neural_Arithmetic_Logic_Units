@@ -13,13 +13,11 @@ Hill, Scott Reed, Jack Rae, Chris Dyer and Phil Blunsom*.
 
 ## Experiment 1: Numerical Extrapolation Failures in Neural Networks
 
-<figure align="center">
 <p align="center">
  <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=50%>
  <img src="./src/images/experiments/extrapolation_failure.png" alt="Drawing", width=50%>
 </p>
 <center>
-<figcaption><b>Left figure - results from the paper, Right figure - actual results.</b></figcaption>
+<b>Left figure - results from the paper, Right figure - actual results.</b>
 </center>
-</figure>
 
