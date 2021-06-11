@@ -11,7 +11,6 @@ A PyTorch implementation of [Neural Arithmetic Logic Units](https://arxiv.org/ab
 
 ## Experiment 1: Numerical Extrapolation Failures in Neural Networks
 
-<figure align="center" float="left">
+<p align="center" float="left">
  <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=60%, height="80%", title="Results from paper"> <img src="./src/images/experiments/extrapolation_failure.png" alt="Drawing", width=60%, height="80%", title="Actual results">
- <figcaption>MLPs learn the identity function only for the range of values they are trained on. The mean error ramps up severely both below and above the range of numbers seen during training.</figcaption>
-</figure>
+</p>
