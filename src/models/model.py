@@ -30,3 +30,9 @@ class GeneralModel(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.model(x)
+
+    def name(self) -> str:
+        raise NotImplementedError
+
+    def __str__(self) -> str:
+        return self.name()
