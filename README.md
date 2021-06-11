@@ -15,3 +15,8 @@ A PyTorch implementation of [Neural Arithmetic Logic Units](https://arxiv.org/ab
  <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=50%, title="Results from paper">
  <img src="./src/images/experiments/extrapolation_failure.png" alt="Drawing", width=50%, title="Actual results">
 </p>
+
+<p align = "center">
+Fig.1 - 
+Fig.2
+</p>
