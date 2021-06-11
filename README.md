@@ -27,7 +27,7 @@ python3 train_mlp.py
 
 #### Results
 
-* Most of the non-linear activation functions used do not cope with extrapolations, except PReLU, which can learn to be highly linear and shows the best results.
+* Most of the non-linear activation functions used do not cope with extrapolations.
 
 <p align="center">
  <img src="./src/images/paper/experiment_01.png" alt="Drawing", width=50%>
@@ -38,4 +38,6 @@ python3 train_mlp.py
   <b>Left figure – results from the paper, Right figure – actual results.</b>
 </div>
 
+## Experiment 2: Simple Function Learning Tasks
 
+Source code in `function_learning` branch. Experiments is in progress.
