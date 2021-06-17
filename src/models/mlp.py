@@ -17,7 +17,11 @@ class MLP(GeneralModel):
 
     def layer(self, input_dim: int, output_dim: int) -> \
             List[Union[nn.Linear, activation_functions]]:
-        if output_dim != self.hidden_dim or self.activation is None:
+        # suppose that the self.output_dim is always equal 1 and less self.hidden_dim
+        if output_dim == self.output_dim or self.activation is None:
             return [nn.Linear(input_dim, output_dim)]
 
         return [nn.Linear(input_dim, output_dim), self.activation()]
+
+    def name(self) -> str:
+        return 'MLP'

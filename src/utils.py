@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from torch import Tensor
 from torch.nn import Hardtanh, Sigmoid, ReLU6, \
     Tanh, Tanhshrink, Hardshrink, LeakyReLU, Softshrink, Softsign, \
     Threshold, ReLU, PReLU, Softplus, ELU, SELU
@@ -58,14 +59,14 @@ def string2function(name: str) -> Optional[activation_functions]:
         raise ValueError('ERROR! Invalid function name!')
 
 
-def train(model: GeneralModel, optimizer: torch.optim.Optimizer, data: torch.Tensor,
-          target: torch.Tensor, iterations: int, verbose: bool = False):
+def train(model: GeneralModel, optimizer: torch.optim.Optimizer, data: Tensor,
+          target: Tensor, iterations: int, verbose: bool = False):
     for iter in range(iterations):
         optimizer.zero_grad()
 
         outs = model(data)
 
-        loss = F.mse_loss(outs, target)
+        loss = F.mse_loss(outs, target.view(-1, 1))
 
         loss.backward()
         optimizer.step()
@@ -75,7 +76,7 @@ def train(model: GeneralModel, optimizer: torch.optim.Optimizer, data: torch.Ten
             print(f'Iter: {iter + 1}, Loss: {loss}, MAE: {MAE}')
 
 
-def test(model: GeneralModel, data: torch.Tensor, target: torch.Tensor):
+def test(model: GeneralModel, data: Tensor, target: Tensor):
     with torch.no_grad():
         outs = model(data)
         return torch.abs(outs - target)
