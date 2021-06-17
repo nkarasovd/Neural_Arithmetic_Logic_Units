@@ -20,7 +20,7 @@ Hill, Scott Reed, Jack Rae, Chris Dyer and Phil Blunsom*.
 MLPs learn the identity function only for the range of values they are trained on. The mean error ramps up severely both below and above the range of numbers seen during training.
 Train interval – `[-5, 5]`, Test interval – `[-20, 20]`.
 
-To run first experiment just use
+To run the first experiment just use
 ```bash
 python3 train_mlp.py
 ```
@@ -40,7 +40,7 @@ python3 train_mlp.py
 
 ## Experiment 2: Simple Function Learning Tasks
 
-To run first experiment just use
+To run the second experiment just use
 
 ```bash
 python3 simple_function_learning.py
