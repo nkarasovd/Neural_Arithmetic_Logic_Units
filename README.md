@@ -40,4 +40,34 @@ python3 train_mlp.py
 
 ## Experiment 2: Simple Function Learning Tasks
 
-Source code in `function_learning` branch. Experiments is in progress.
+To run first experiment just use
+
+```bash
+python3 simple_function_learning.py
+```
+
+### Interpolation
+
+* RMSE (normalized to a random baseline)
+
+|     |ReLU|None|NAC|NALU|
+| --- |  --- | --- | --- | --- |
+|a + b|0.001|0.000|0.000|0.002|
+|a - b|14.814|0.054|0.000|0.000|
+|a x b|20.160|1.630|8.163|0.210|
+|a / b|3.673|0.372|1.515|0.008|
+|a ^ 2|3.307|4.094|7.943|0.215|
+|sqrt(a)|0.396|0.407|2.628|0.068|
+
+### Extrapolation
+* RMSE (normalized to a random baseline)
+
+|     |ReLU|None|NAC|NALU|
+| --- |  --- | --- | --- | --- |
+|a + b|75.051|0.013|0.008|0.000|
+|a - b|84.235|0.001|0.046|0.000|
+|a x b|96.092|64.749|80.187|53.327|
+|a / b|14.941|3.470|16.827|2.702|
+|a ^ 2|96.660|67.518|80.774|54.451|
+|sqrt(a)|13.923|16.103|53.275|0.403|
+
