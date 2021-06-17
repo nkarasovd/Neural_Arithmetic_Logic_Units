@@ -41,20 +41,20 @@ NUMBER_CODES = {
 
 class Numbers:
     def __init__(self):
-        self.EOS = 0
-        self.number_codes = NUMBER_CODES
-        self.reverse_codes = {v: k for k, v in self.number_codes.items()}
-        self.language = 'en'
+        self._EOS = 0
+        self._number_codes = NUMBER_CODES
+        self._reverse_codes = {v: k for k, v in self._number_codes.items()}
+        self._language = 'en'
 
     def num2words(self, number: Union[int, float]) -> str:
-        return num2words(int(number), lang=self.language)
+        return num2words(int(number), lang=self._language)
 
     def _to_string(self, number: List[str]) -> str:
         return ' '.join(number).replace(' ,', ',')
 
     def to_string(self, numbers_lst: List[List[Union[int, float]]]) -> List[str]:
         # [[20, 0]] -> ['eighteen']
-        return [self._to_string([self.number_codes[int(x)] for x in num_lst[:-1]]) for num_lst in numbers_lst]
+        return [self._to_string([self._number_codes[int(x)] for x in num_lst[:-1]]) for num_lst in numbers_lst]
 
     def _string2lst(self, x: str) -> List[str]:
         # twenty-five -> ['twenty', 'five']
@@ -62,5 +62,8 @@ class Numbers:
 
     def code_numbers(self, number_lst: List[Union[int, float]]) -> List[List[int]]:
         # [2, 3, 4, 18, 25] -> [[4, 0], [5, 0], [6, 0], [20, 0], [22, 7, 0]]
-        return [[self.reverse_codes[w] for w in self._string2lst(self.num2words(num))] + [self.EOS]
+        return [[self._reverse_codes[w] for w in self._string2lst(self.num2words(num))] + [self._EOS]
                 for num in number_lst]
+
+    def __len__(self) -> int:
+        return len(self._number_codes)
