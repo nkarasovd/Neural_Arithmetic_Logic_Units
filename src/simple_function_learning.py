@@ -139,7 +139,7 @@ def evaluate(x_train: np.ndarray, y_train: np.ndarray,
     for net in models:
         print(f"\t> Training {str(net)}")
         optim = torch.optim.Adam(net.parameters(), lr=1e-2)
-        train(net, optim, FloatTensor(x_train), FloatTensor(y_train), int(1e1))
+        train(net, optim, FloatTensor(x_train), FloatTensor(y_train), int(1e5))
         mse = test(net, FloatTensor(x_test), FloatTensor(y_test)).item()
         results[fn_str].append(mse / r * 100)
 
