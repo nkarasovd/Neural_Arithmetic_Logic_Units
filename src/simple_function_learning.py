@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 from torch import Tensor, FloatTensor
 
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Union
 
 from models.mlp import MLP
 from models.nac import NAC
@@ -101,24 +101,24 @@ def generate_data(operator: str, right_bound: float,
     return x_train, y_train, x_test_i, y_test_i, x_test_e, y_test_e, random_rmse_i, random_rmse_e
 
 
-def test(model, data: Tensor, target: Tensor):
+def test(model, data: Tensor, target: Tensor) -> Tensor:
     with torch.no_grad():
         outs = model(data)
         return torch.sqrt(F.mse_loss(outs, target.view(-1, 1)))
 
 
-def my_main():
+def build_models() -> List[Union[MLP, NAC, NALU]]:
     models = [
-        # MLP(input_dim=2,
-        #     output_dim=1,
-        #     num_hidden_layers=1,
-        #     hidden_dim=2,
-        #     activation='relu6'),
-        # MLP(input_dim=2,
-        #     output_dim=1,
-        #     num_hidden_layers=1,
-        #     hidden_dim=2,
-        #     activation='none'),
+        MLP(input_dim=2,
+            output_dim=1,
+            num_hidden_layers=1,
+            hidden_dim=2,
+            activation='relu6'),
+        MLP(input_dim=2,
+            output_dim=1,
+            num_hidden_layers=1,
+            hidden_dim=2,
+            activation='none'),
         NAC(input_dim=2,
             output_dim=1,
             num_hidden_layers=1,
@@ -129,6 +129,29 @@ def my_main():
              hidden_dim=2)
     ]
 
+    return models
+
+
+def evaluate(x_train: np.ndarray, y_train: np.ndarray,
+             x_test: np.ndarray, y_test: np.ndarray,
+             r: float, results: Dict[str, List[float]], fn_str: str):
+    models = build_models()
+    for net in models:
+        print(f"\t> Training {str(net)}")
+        optim = torch.optim.Adam(net.parameters(), lr=1e-2)
+        train(net, optim, FloatTensor(x_train), FloatTensor(y_train), int(1e1))
+        mse = test(net, FloatTensor(x_test), FloatTensor(y_test)).item()
+        results[fn_str].append(mse / r * 100)
+
+
+def save_results(results: Dict[str, List[float]], path: str):
+    with open(path, "w") as f:
+        f.write("Relu6\tNone\tNAC\tNALU\n")
+        for k, v in results.items():
+            f.write("{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\n".format(*results[k]))
+
+
+def main():
     results_i, results_e = {}, {}
 
     for fn_str in ARITHMETIC_FUNCTIONS.keys():
@@ -139,43 +162,13 @@ def my_main():
         x_train, y_train, x_test_i, y_test_i, \
         x_test_e, y_test_e, r_i, r_e = generate_data(fn_str, 0.5, 50000, 5000)
 
-        for net in models:
-            print(f"\t> Training {str(net)}")
-            optim = torch.optim.Adam(net.parameters(), lr=1e-2)
-            train(net, optim, FloatTensor(x_train), FloatTensor(y_train), int(1e5))
-            mse = test(net, FloatTensor(x_test_i), FloatTensor(y_test_i)).item()
-            results_i[fn_str].append(mse / r_i * 100)
+        evaluate(x_train, y_train, x_test_i, y_test_i, r_i, results_i, fn_str)
 
-    with open('./' + "interpolation.txt", "w") as f:
-        f.write("Relu6\tNone\tNAC\tNALU\n")
-        for k, v in results_i.items():
-            f.write("{:.3f}\t{:.3f}\t\n".format(*results_i[k]))
+        evaluate(x_train, y_train, x_test_e, y_test_e, r_e, results_e, fn_str)
+
+    save_results(results_i, './results/' + "interpolation.txt")
+    save_results(results_e, './results/' + "extrapolation.txt")
 
 
 if __name__ == '__main__':
-    my_main()
-    # models = [
-    #     MLP(input_dim=2,
-    #         output_dim=1,
-    #         num_hidden_layers=1,
-    #         hidden_dim=2,
-    #         activation='relu6'),
-    #     MLP(input_dim=2,
-    #         output_dim=1,
-    #         num_hidden_layers=1,
-    #         hidden_dim=2,
-    #         activation='none'),
-    #     NAC(input_dim=2,
-    #         output_dim=1,
-    #         num_hidden_layers=1,
-    #         hidden_dim=2),
-    #     NALU(input_dim=2,
-    #          output_dim=1,
-    #          num_hidden_layers=1,
-    #          hidden_dim=2)
-    # ]
-    #
-    # for m in models:
-    #     for c in m.parameters():
-    #         print(c)
-    #     print()
+    main()
