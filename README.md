@@ -73,13 +73,15 @@ python3 simple_function_learning.py
 
 ## Experiment 3: Language to Number Translation Tasks
 
+To run the third experiment just use
+
 ```bash
 python3 main.py
 ```
 Mean absolute error (MAE) comparison on translating number strings to scalars. 
 LSTM + NALU means a single LSTM layer followed by NALU.
 
-|Model|Train MAE|Validation MAE|Test_MAE|
+|Model|Train MAE|Validation MAE|Test MAE|
 | --- |  --- | --- | --- |
 |LSTM + Linear|111.6033|141.3215|140.4769|
 |LSTM + NALU|0.6885|0.6727|0.7218|
