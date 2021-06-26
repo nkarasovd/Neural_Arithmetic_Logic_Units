@@ -48,7 +48,7 @@ class DataBuilder:
 
         return result
 
-    def shuffle_data(self, data: List[List[Union[List[Tensor], Tensor]]]) \
+    def shuffle_data(self, data: Tuple[List[Tensor], Tensor]) \
             -> Tuple[List[Tensor], Tensor]:
         numbers_representation, numbers = data
         rand = torch.randperm(numbers.size(0))
