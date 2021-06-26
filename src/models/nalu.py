@@ -25,15 +25,13 @@ class NALUCell(nn.Module):
         self.NACCell_1 = NACCell(self.input_dim, self.output_dim)
         self.NACCell_2 = NACCell(self.input_dim, self.output_dim)
 
-        self.register_parameter('G', self.G)
-
         xavier_uniform_(self.G)
+        self.register_parameter('bias', None)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         a = self.NACCell_1(x)
-        g = torch.sigmoid(F.linear(x, self.G, bias=None))
+        g = torch.sigmoid(F.linear(x, self.G, self.bias))
         m = torch.exp(self.NACCell_2(torch.log(torch.abs(x) + self.eps)))
-
         return a * g + (1 - g) * m
 
 
