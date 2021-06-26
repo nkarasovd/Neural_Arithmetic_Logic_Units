@@ -13,7 +13,8 @@ from language_models.databuilder import DataBuilder
 
 class TrainModel:
     def __init__(self, model: LanguageModel, optimizer: torch.optim.Optimizer,
-                 databuilder: DataBuilder, data: List[List[Union[List[Tensor], Tensor]]], dir: str):
+                 databuilder: DataBuilder, data: List[List[Union[List[Tensor], Tensor]]],
+                 dir: str, title: str):
         self.model = model
         self.optimizer = optimizer
         self.data_builder = databuilder
@@ -24,7 +25,7 @@ class TrainModel:
 
         self.cur_epoch = 0
 
-        self.plot_builder = PlotBuilder(dir_save=dir)
+        self.plot_builder = PlotBuilder(dir_save=dir, title=title)
 
     def train(self, batch_size: int, verbose: bool = False):
         loss_sum = 0.
