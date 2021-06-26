@@ -71,3 +71,26 @@ python3 simple_function_learning.py
 |a ^ 2|96.660|67.518|80.774|54.451|
 |sqrt(a)|13.923|16.103|53.275|0.403|
 
+## Experiment 3: Language to Number Translation Tasks
+
+```bash
+python3 main.py
+```
+Mean absolute error (MAE) comparison on translating number strings to scalars. 
+LSTM + NALU means a single LSTM layer followed by NALU.
+
+|Model|Train MAE|Validation MAE|Test_MAE|
+| --- |  --- | --- | --- | --- |
+|LSTM + Linear|111.6033|141.3215|140.4769|
+|LSTM + NALU|0.6885|0.6727|0.7218|
+
+All experiments used `layer size = 32`, `learning rate = 1e-3`.
+
+<p align="center">
+ <img src="./src/images/experiments/lstm_linear_epoch_100.svg" alt="Drawing", width=50%>
+ <img src="./src/images/experiments/lstm_nalu_epoch_100.svg" alt="Drawing", width=50%>
+</p>
+
+<div align="center">
+  <b>Left figure – LSTM + Linear Layer, Right figure – LSTM + NALU.</b>
+</div>
